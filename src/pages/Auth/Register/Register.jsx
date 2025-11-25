@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import UseAuth from "../../../hooks/UseAuth";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Register = () => {
   const {
@@ -8,14 +10,49 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const { registerUser } = UseAuth();
+
   const handleRegistration = (data) => {
     console.log("after register", data);
+    registerUser(data.email, data.password)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
-    <div>
+    <div className="mt-24">
+      <h3 className="text-3xl">Create an Account </h3>
+      <p>Register with our service</p>
       <form onSubmit={handleSubmit(handleRegistration)}>
         <fieldset className="fieldset">
+          {/* Name field  */}
+          <label className="label">Name</label>
+          <input
+            type="text"
+            className="input"
+            placeholder="Name"
+            {...register("name", { required: true })}
+          />
+          {errors.email?.type === "required" && (
+            <p className="text-red-500">Name is required</p>
+          )}
+          {/* Photo Field  */}
+          <label className="label">Photo</label>
+          <input
+            type="file"
+            className="file-input"
+            placeholder="Your Photo"
+            {...register("photo", { required: true })}
+          />
+          {errors.email?.type === "required" && (
+            <p className="text-red-500">Photo is required</p>
+          )}
+
+          {/* email field  */}
           <label className="label">Email</label>
           <input
             type="email"
@@ -40,9 +77,10 @@ const Register = () => {
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-neutral mt-4">Register</button>
         </fieldset>
       </form>
+      <SocialLogin></SocialLogin>
     </div>
   );
 };

@@ -6,7 +6,7 @@ import Logo from "../components/Logo/Logo";
 
 const AuthLayout = () => {
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       <Logo></Logo>
       <div className="flex">
         <div className="flex-1">
