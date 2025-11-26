@@ -71,7 +71,7 @@ const NavBar = () => {
             LogIn
           </NavLink>
         )}
-        <NavLink className="btn btn-primary" to="/login">
+        <NavLink className="btn btn-primary" to="/rider">
           Be a rider
         </NavLink>
       </div>
