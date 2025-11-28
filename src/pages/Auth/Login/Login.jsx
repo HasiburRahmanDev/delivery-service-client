@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import UseAuth from "../../../hooks/UseAuth";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
@@ -13,11 +13,16 @@ const Login = () => {
 
   const { signInUser } = UseAuth();
 
-  const handleLoging = (data) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log("in the login page", location);
+
+  const handleLogin = (data) => {
     console.log(data);
     signInUser(data.email, data.password)
       .then((result) => {
         console.log(result);
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         console.log(error);
@@ -28,7 +33,7 @@ const Login = () => {
     <div className="mt-24">
       <h3 className="text-3xl">Welcome Back</h3>
       <p>Please Log In</p>
-      <form onSubmit={handleSubmit(handleLoging)}>
+      <form onSubmit={handleSubmit(handleLogin)}>
         <fieldset className="fieldset">
           <label className="label text-2xl">Email</label>
           <input
@@ -55,7 +60,7 @@ const Login = () => {
         </fieldset>
         <p>
           New to Delivery service{" "}
-          <Link to="/register" className="text-blue-500">
+          <Link state={location.state} to="/register" className="text-blue-500">
             Register
           </Link>
         </p>
